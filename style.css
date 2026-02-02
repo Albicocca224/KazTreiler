@@ -35,20 +35,22 @@ body {
     padding: 15px 0;
 }
 
-.logo{
+.logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-style: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 15px;
 }
 
 .logo-img {
-    height: 80px;
+    height: 50px;
     width: auto;
-    padding: 10px 20px;
-    border-radius: 5px;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: black;
+    letter-spacing: 1px;
 }
 
 .nav-list {
@@ -87,8 +89,6 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('placeholder-hero.jpg') center/cover no-repeat;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -98,6 +98,23 @@ body {
     position: relative;
     margin-top: 80px;
     background-color: #1a1a1a;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('images/bg.jpg') center/cover no-repeat;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content {
@@ -309,7 +326,8 @@ section {
 }
 
 .about-image {
-    height: 500px;
+    height: 300px;
+    width: 500px;
     background: #ddd;
     border-radius: 10px;
     overflow: hidden;

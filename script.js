@@ -98,17 +98,30 @@ productCards.forEach(card => {
 function animateCounter(element, target) {
     const duration = 2000; // 2 seconds
     const steps = 60;
-    const stepValue = target / steps;
     const stepDuration = duration / steps;
+
+    // Check if target is a decimal number
+    const isDecimal = target.toString().includes('.');
+    const stepValue = target / steps;
     let current = 0;
 
     const timer = setInterval(() => {
         current += stepValue;
         if (current >= target) {
-            element.textContent = target + (element.dataset.suffix || '');
+            // Display final value with proper formatting
+            if (isDecimal) {
+                element.textContent = target.toFixed(1) + (element.dataset.suffix || '');
+            } else {
+                element.textContent = target + (element.dataset.suffix || '');
+            }
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(current) + (element.dataset.suffix || '');
+            // Display current value with proper formatting
+            if (isDecimal) {
+                element.textContent = current.toFixed(1) + (element.dataset.suffix || '');
+            } else {
+                element.textContent = Math.floor(current) + (element.dataset.suffix || '');
+            }
         }
     }, stepDuration);
 }
@@ -120,8 +133,10 @@ const statsObserver = new IntersectionObserver((entries) => {
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
                 const text = stat.textContent;
-                const number = parseInt(text.replace(/\D/g, ''));
-                const suffix = text.replace(/[\d]/g, '');
+                // Extract number (including decimals) and suffix
+                const numberMatch = text.match(/[\d.]+/);
+                const number = numberMatch ? parseFloat(numberMatch[0]) : 0;
+                const suffix = text.replace(/[\d.]/g, '');
                 stat.dataset.suffix = suffix;
                 stat.textContent = '0' + suffix;
                 animateCounter(stat, number);
